@@ -21,8 +21,7 @@ class Main {
         await ingestData();
 
         const oneHourMs = 1 * 60 * 60 * 1000;
-        const tenSecMs = 10 * 1000;
-        interval = setInterval(ingestData, tenSecMs);
+        interval = setInterval(ingestData, oneHourMs);
     }
 }
 
