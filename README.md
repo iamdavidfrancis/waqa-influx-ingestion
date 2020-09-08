@@ -21,9 +21,10 @@ The image requires several environment variables to work:
 
 # Known Issues
 
-None as of this commit. Please see GitHub issues for anything new.
+* Currently hard coded to pull Bellevue data.
 
 
 # TODO
 * Add Influx port to environment variables.
+* Add way to select stations to pull from
 * Add UTs
