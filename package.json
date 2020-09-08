@@ -1,0 +1,23 @@
+{
+  "name": "waqa-influx-ingestion",
+  "version": "1.0.0",
+  "description": "Tool to ingest Bellevue air quality from the enviwa.ecology.wa.gov site into influxdb",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "debug": "node --inspect dist/index.js"
+  },
+  "author": "David Francis <david@iamdavidfrancis.com>",
+  "license": "MIT",
+  "dependencies": {
+    "influx": "^5.6.3",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.6.4",
+    "@types/node-fetch": "^2.5.7",
+    "typescript": "^4.0.2"
+  }
+}
