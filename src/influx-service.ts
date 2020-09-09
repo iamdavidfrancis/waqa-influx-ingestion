@@ -54,6 +54,8 @@ export default class InfluxService {
 
         const timestamp = item.datetime || new Date();
 
+        console.log(`Writing data to influx. Timestamp: ${timestamp.toISOString()}. Index: ${item.index}`);
+
         try {
             await this.influx.writePoints([
                 {

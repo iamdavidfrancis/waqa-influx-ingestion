@@ -20,8 +20,8 @@ class Main {
 
         await ingestData();
 
-        const oneHourMs = 1 * 60 * 60 * 1000;
-        interval = setInterval(ingestData, oneHourMs);
+        const halfHourMs = 30 * 60 * 1000;
+        interval = setInterval(ingestData, halfHourMs);
     }
 }
 
