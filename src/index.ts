@@ -28,5 +28,5 @@ class Main {
 
 const app = new Main();
 app.start()
-    .then(() => console.log("Main start method ended. Interval Id: " + JSON.stringify(interval)))
+    .then(() => console.log("Main start method ended. Interval running."))
     .catch((err) => console.error(`Main start method ended with an error: ${JSON.stringify(err, null, '\t')}`))

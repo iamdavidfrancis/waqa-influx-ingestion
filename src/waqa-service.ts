@@ -98,6 +98,8 @@ export default class WaqaService {
         body.startDateAbsolute = `${todayMonth}/${todayDay}/${todayYear} 00:00`;
         body.toTb = 60;
 
+        console.log("Requesting:", JSON.stringify(body, null, '\t'));
+
         return body;
     }
 }
