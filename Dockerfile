@@ -10,6 +10,11 @@ RUN cd /tmp && npm install --loglevel=warn \
     && mkdir -p $APP \
     && mv /tmp/node_modules $APP
 
+# Set TZ to Seattle time to fix issues when UTC rolls over
+RUN apk add tzdata && cp /usr/share/zoneinfo/America/Los_Angeles /etc/localtime \
+    && echo "America/Los_Angeles" > /etc/timezone \
+    $$ apk del tzdata
+
 COPY src $APP/src
 COPY package.json $APP
 COPY tsconfig.json $APP
