@@ -17,44 +17,46 @@ export interface IAirQuality extends IAirQualityBase {
 export default class WaqaService {
 
     public async getCurrentAirQuality(): Promise<IAirQuality> {
-        try {
-            const response = await WaqaService.fetchData();
+        console.log("Fetching most recent data.");
+        const response = await WaqaService.fetchData();
 
-            if (response.ok) {
-                // Process response
-                const payload = await response.json();
-    
-                if (!payload || !payload[0] || payload[0].StationId !== 190) {
-                    throw `Unknown response payload: ${JSON.stringify(payload, null, '\t')}`;
-                }
-    
-                const data = payload[0].data as Array<IAirQuality>;
-    
-                const lastItem = data.reduce((last, current) => {
-                    if (!last) {
-                        return current;
-                    }
-    
-                    const lastTime = new Date(last.datetime || 0);
-                    const currTime = new Date(current.datetime || 0);
-    
-                    return (lastTime > currTime) ? last : current;
-                });
-    
-                lastItem.indexes = undefined; // Remove this from model.
-                lastItem.datetime = lastItem.datetime ? new Date(lastItem.datetime) : new Date();
-    
-                return lastItem;
-            } else {
-                const err = await response.text();
-                throw err;
+        if (response.ok) {
+            // Process response
+            const payload = await response.json() as Array<any>;
+
+            if (!payload) {
+                throw `Unknown response payload: ${JSON.stringify(payload, null, '\t')}`;
             }
+
+            if (payload.length === 0) {
+                throw "Empty payload received. No data yet for the day.";
+            }
+
+            if (payload[0].StationId !== 190) {
+                throw `Invalid StationId: ${payload[0].StationId}`;
+            }
+
+            const data = payload[0].data as Array<IAirQuality>;
+
+            const lastItem = data.reduce((last, current) => {
+                if (!last) {
+                    return current;
+                }
+
+                const lastTime = new Date(last.datetime || 0);
+                const currTime = new Date(current.datetime || 0);
+
+                return (lastTime > currTime) ? last : current;
+            });
+
+            lastItem.indexes = undefined; // Remove this from model.
+            lastItem.datetime = lastItem.datetime ? new Date(lastItem.datetime) : new Date();
+
+            return lastItem;
+        } else {
+            const err = await response.text();
+            throw err;
         }
-        catch (e) {
-            console.error(JSON.stringify(e), null, '\t');
-            throw e;
-        }
-        
     }
 
     private static async fetchData(): Promise<Response> {

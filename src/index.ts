@@ -14,7 +14,12 @@ class Main {
                 var airQuality = await waqaService.getCurrentAirQuality();
                 await influxService.addDbEntry("Bellevue", airQuality);
             } catch (e) {
-                console.error(JSON.stringify(e, null, '\t'));
+                if (typeof(e) === "string") {
+                    console.error(e);
+                } else {
+                    console.error(JSON.stringify(e, null, '\t'));
+                }
+                
             }
         };
 
@@ -25,8 +30,7 @@ class Main {
     }
 }
 
-
 const app = new Main();
-app.start()
-    .then(() => console.log("Main start method ended. Interval running."))
-    .catch((err) => console.error(`Main start method ended with an error: ${JSON.stringify(err, null, '\t')}`))
+    app.start()
+        .then(() => console.log("Main start method ended. Interval running."))
+        .catch((err) => console.error(`Main start method ended with an error: ${JSON.stringify(err, null, '\t')}`));
